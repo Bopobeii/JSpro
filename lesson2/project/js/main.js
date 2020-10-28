@@ -8,6 +8,7 @@ class ProductList {
 
     this._fetchGoods();
     this.#render();
+    this.all_price();
   }
 
   _fetchGoods() {
@@ -30,10 +31,18 @@ class ProductList {
       block.insertAdjacentHTML('beforeend', productObject.getGoodHTML());
     }
   }
+
+  all_price() {
+    let summ = 0;
+    for (let product of this.#goods) {
+summ += product.price;
+          }
+    return summ;
+  }
 }
 
 class ProductItem {
-  constructor(product, img='https://placehold.it/200x150') {
+  constructor(product, img='https://placehold.it/150x100') {
     this.title = product.title;
     this.price = product.price;
     this.id = product.id;
@@ -42,36 +51,56 @@ class ProductItem {
 
   getGoodHTML() {
     return `<div class="product-item" data-id="${this.id}">
-              <img src="${this.img}" alt="Some img">
-              <div class="desc">
-                  <h3>${this.title}</h3>
-                  <p>${this.price} \u20bd</p>
-                  <button class="buy-btn">Купить</button>
-              </div>
-            </div>`;
+<img class="product-item__img" src="${this.img}" alt="">
+            <h3 class="product-item__title">${this.title}</h3>
+            <p class="product-item__price">${this.price}</p>
+            <button class="product-item__by-btn">Добавить в корзину</button>
+          </div>`;
   }
 }
 
 const list = new ProductList();
 
-// const products = [
-//   {id: 1, title: 'Notebook', price: 20000},
-//   {id: 2, title: 'Mouse', price: 1500},
-//   {id: 3, title: 'Keyboard', price: 5000},
-//   {id: 4, title: 'Gamepad', price: 4500},
-// ];
-//
-// const renderProduct = (item, img='https://placehold.it/200x150') => `<div class="product-item" data-id="${this.id}">
-//               <img src="${img}" alt="Some img">
-//               <div class="desc">
-//                   <h3>${item.title}</h3>
-//                   <p>${item.price} \u20bd</p>
-//                   <button class="buy-btn">Купить</button>
-//               </div>
-//           </div>`;
-//
-// const renderProducts = list => {
-// document.querySelector('.products').insertAdjacentHTML('beforeend', list.map(item => renderProduct(item)).join(''));
-// };
-//
-// renderProducts(products);
+
+class ShoppingCart {
+  /*Как я это вижу. При каждом нажатии "Добавить в корзину" брать данные товара из разметки. Было бы проще обратится к методу _fetchGoods() и по id товара брать нужный объект, но как понял это неовозможно. Дальше отрендерить эти данные в сиписок покупок в корзине*/
+  constructor() {
+  };
+};
+
+class ElementCart {
+constructor() {
+  };
+};
+
+/*
+const products = [
+  {id: 1, title: 'Notebook', price: 20000},
+  {id: 2, title: 'Mouse', price: 1500},
+  {id: 3, title: 'Keyboard', price: 5000},
+  {id: 4, title: 'Gamepad', price: 4500},
+];
+
+const renderProduct = (title = '', price = 0, img = 'https://placehold.it/150x100') =>  `<div class="product-item">
+            <img class="product-item__img" src="${img}" alt="">
+            <h3 class="product-item__title">${title}</h3>
+            <p class="product-item__price">${price}</p>
+            <button class="product-item__by-btn">Добавить в корзину</button>
+          </div>`;
+;
+
+const renderProducts = (list = []) => {
+
+  const productList = list.forEach(item => {
+   prod = renderProduct(item.title, item.price)
+   document.querySelector('.products').insertAdjacentHTML('beforeend', `${prod}`);
+  console.log(prod);
+});
+//  const productList = list.map(item => renderProduct(item.title, item.price));
+  
+ 
+};
+
+renderProducts(products);
+
+*/
