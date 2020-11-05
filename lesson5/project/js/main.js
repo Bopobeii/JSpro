@@ -6,6 +6,8 @@ const app = new Vue({
         catalogUrl: '/catalogData.json',
         products: [],
         imgCatalog: 'https://placehold.it/200x150',
+        searchLine: '',
+        filtered: [],
     },
     methods: {
         getJson(url) {
@@ -18,23 +20,29 @@ const app = new Vue({
         addProduct(product) {
             console.log(product.id_product)
         },
+        filter() {
+            let regexp = new RegExp(this.searchLine, 'i');
+            this.filtered = this.products.filter(el => regexp.test(el.product_name));
+        },
     },
     beforeCreate() {
         console.log('beforeCreate');
     },
     created() {
         console.log('created');
-        this.getJson(`${API}${this.catalogUrl}`)
-            .then(data => {
-                for (el of data) {
-                    this.products.push(el);
-                }
-            });
+        
     },
     beforeMount() {
         console.log('beforeMount');
     },
     mounted() {
+        this.getJson(`${API}${this.catalogUrl}`)
+            .then(data => {
+                for (el of data) {
+                    this.products.push(el);
+                    this.filtered.push(el);
+                }
+            });
         console.log('mounted');
     },
     beforeUpdate() {
